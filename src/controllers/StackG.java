@@ -1,46 +1,48 @@
 package controllers;
+
 import java.util.EmptyStackException;
 
-import  models.Node;
+import models.Node;
+import models.NodeGeneric;
 
-public class Stack {
-    private Node top;
+public class StackG<T> {
+    private NodeGeneric<T> top;
     private int size;
-
-    public Stack(Node top) {
+    public StackG(NodeGeneric<T> top, int size) {
         this.top = top;
-        this.size=0;
+        this.size = 0;
+    } 
+
+    public void push (T value){
+        NodeGeneric<T> newNodeGeneric=new NodeGeneric<T>(value, top);
+        newNodeGeneric.setNext(top);
+        top=newNodeGeneric;
     }
-    public void push (int value){
-        Node newNode=new Node (value);
-        newNode.setNext(top);
-        top =newNode;   
-    }
-    public int pop(){
+    public T pop(){
         if(top== null){
             throw new EmptyStackException();
         }
-        int value=top.getValue();
+        T value=top.getValue();
         top=top.getNext();
         return value;
     }
-    public int peek() {
+    public T peek() {
         if (isEmpty()) 
             throw new EmptyStackException();
         return top.getValue();
     }
-
     public boolean isEmpty(){
         return top==null;
     }
     public void printStack() {
-    Node aux = top;
+    NodeGeneric<T> aux = top;
     while (aux != null) {
         System.out.print(aux.getValue() + " | ");
         aux = aux.getNext();
     }
     System.out.println();
 }
+    
     public int size () {
         return this.size;
     }
