@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.EmptyStackException;
 import models.NodeGeneric;
+import models.Persona;
 
 public class ColaG<T> {
     private NodeGeneric<T> primero;
@@ -59,6 +60,58 @@ public class ColaG<T> {
 
         return primero.getValue();
     }
+
+    public Persona findByName(String name){
+        if (isEmpty()) {
+            System.out.println("Nombre no encontrado:" +name+ " ");
+            return null; 
+        }
+        NodeGeneric<T> aux=primero;
+        while (aux != null){
+            Persona persona= (Persona) aux.getValue();
+            if (persona.getNombre().equals(name)){
+                System.out.println("Buscar por Nombre: " + name + "=>" + persona.getNombre() + " (encontrado)");
+                return persona;
+            }
+            aux = aux.getNext(); 
+        }
+        return null;
+    }
+    public Persona removeByName(String name) {
+        if (isEmpty()) {
+            System.out.println("Eliminar nombre:"+name+"=>null (cola vacía)");
+            return null;
+        }
+
+        NodeGeneric<T> aux = primero;
+        NodeGeneric<T> anterior = null;
+
+        while (aux != null) {
+            Persona persona = (Persona) aux.getValue();
+
+            if (persona.getNombre().equals(name)) {
+                if (anterior == null) {
+                    primero = aux.getNext();
+                    if (primero == null) {
+                        ultimo = null;
+                    }
+                } else {
+                    anterior.setNext(aux.getNext());
+                    if (aux == ultimo) {
+                        ultimo = anterior;
+                    }
+                }
+                size--;
+                System.out.println("Eliminar Nombre:"+name+"=>"+persona.getNombre()+" persona eliminada");
+                return persona;
+            }
+            anterior = aux;
+            aux = aux.getNext(); 
+        }
+        System.out.println("Eliminar Nombre:"+name+"no encontrado");
+        return null;
+    }
+
 
     public void printCola() {
         NodeGeneric<T> actual = primero;
