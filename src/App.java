@@ -1,6 +1,10 @@
-import models.Persona; 
-import controllers.*;
 
+import Materia.controllers.Stack;
+import Ejercicio_01_sign.SignValidarDatos;
+import Ejercicio_02_sorting.OrdenarStack;
+import Materia.controllers.Cola;
+import Materia.controllers.ColaG;
+import Materia.models.Persona;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -49,5 +53,28 @@ public class App {
 
         colaPersonas.findByName("Maria");
         Persona pEliminada=colaPersonas.removeByName("Pablo");
+
+
+        SignValidarDatos validador = new SignValidarDatos();
+
+        String ejemplo1 = "([]){}";
+        String ejemplo2 = "({)}";
+
+        System.out.println("Cadena: " + ejemplo1 + " => " + validador.isValid(ejemplo1)); 
+        System.out.println("Cadena: " + ejemplo2 + " => " + validador.isValid(ejemplo2)); 
+
+        Stack pilaDesor = new Stack(null);
+        pilaDesor.push(5);
+        pilaDesor.push(1);
+        pilaDesor.push(4);
+        pilaDesor.push(2);
+
+        System.out.print("Antes de ordenar: ");
+        pilaDesor.printStack();
+
+        OrdenarStack.ordenar(pilaDesor);
+
+        System.out.print("Después de ordenar: ");
+        pilaDesor.printStack();
 }
 }
